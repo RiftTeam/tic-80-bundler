@@ -1,8 +1,8 @@
-# tic-80-bundler
+# TIC-80-bundler
 
-A Go program to bundle required files into one looong source file
+A Go program to bundle required files into one looong source file.
 
-This is to take of `require`d files that are loaded at run-time. This bundler pulls the contents of those files into functions and calls them at run-time instead.
+This is to ensure `require`d files work. Lua pulls these in as it runs. This bundler wraps the contents of those files into functions and calls those at run-time instead.
 
 Necessary to pull the many individual RiFT libs into one file for submitting to a competition, or putting online on TIC80.com.
 
