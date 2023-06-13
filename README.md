@@ -8,9 +8,13 @@ Necessary to pull the many individual RiFT libs into one file for submitting to 
 
 ## Building
 
+There are typical PC, Mac and Linux builds in the `build` directory.
+
 This program is written in Go.
 
-If you have Go installed, `go build` should create you an executable.
+If you have Go installed, `go build` in this directory should create you an executable. You may need to run `go get` first.
+
+If you want to refresh the `build` directory for others, `build.bat` will work on Windows.
 
 ## Running
 
