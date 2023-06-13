@@ -15,3 +15,9 @@ If you have Go installed, `go build` should create you an executable.
 ## Running
 
 ```tic-80-bundler.exe --src=mainsourcefile.lua --dest=outfile.lua```
+
+Both src and dest should be full or relative paths. *DO* take a copy / check your code first in if an accidental overwrite would ruin your day.
+
+## Warning
+
+This will be super brittle, but I (jtruk) got it to work on a complex, nested set of requires and it did good. Drop me a line if it fails to work and I'll try to either fix it or suggest a workaround for the code.
