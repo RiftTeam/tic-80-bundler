@@ -11,9 +11,7 @@ import (
 )
 
 var PATHS []string
-var MAIN_FILE *SourceFile
 var REQUIRED_FILES = make(map[string]*SourceFile)
-var OUTFILE *os.File
 
 func main() {
 	app := &cli.App{
@@ -50,19 +48,19 @@ func doBundling(srcMainFilepath string, destFilepath string) {
 	}
 	defer file.Close()
 	mainSource, err := readFileLines(file)
-	MAIN_FILE = NewSourceFile("main", mainSource)
+	mainFile := NewSourceFile("main", mainSource)
 
 	// Read In
-	MAIN_FILE.Strip()
+	mainFile.Strip()
 
 	// Write all
-	OUTFILE, err := os.Create(destFilepath)
+	OutFile, err := os.Create(destFilepath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer OUTFILE.Close()
+	defer OutFile.Close()
 
-	writeLine(OUTFILE, "-- Assembled by the RiFT bundler\n\n")
+	writeLine(OutFile, "-- Assembled by the RiFT bundler\n\n")
 
 	// Ensure all files are stripped.
 	// We're adding to this map as we iterate over it - so this is over the top, but working
@@ -83,15 +81,15 @@ func doBundling(srcMainFilepath string, destFilepath string) {
 
 	// Write out the files
 	for funcName, rf := range REQUIRED_FILES {
-		fmt.Printf("Writing file: %s\n", funcName)
-		writeLine(OUTFILE, fmt.Sprintf("%s=function()\n", funcName))
-		rf.Write(OUTFILE)
-		writeLine(OUTFILE, "\nend\n\n")
+		fmt.Printf("Bundling file: %s\n", funcName)
+		writeLine(OutFile, fmt.Sprintf("%s=function()\n", funcName))
+		rf.Write(OutFile)
+		writeLine(OutFile, "\nend\n\n")
 	}
 
-	MAIN_FILE.Write(OUTFILE)
+	mainFile.Write(OutFile)
 
-	fmt.Println("done")
+	fmt.Println("-> DONE. Hope it works!")
 }
 
 func readFile(filename string) string {

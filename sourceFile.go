@@ -28,7 +28,6 @@ func (f *SourceFile) IsStripped() bool {
 }
 
 func (f *SourceFile) Strip() {
-	fmt.Printf("Lines In: %d (%s)\n", len(f.code), f.name)
 	for _, line := range f.code {
 		includeLine := true
 		matchesPath := REGEX_PACKAGE_PATH.FindStringSubmatch(line)
@@ -101,12 +100,6 @@ func findAndOpenFile(filename string) (*os.File, error) {
 
 	return nil, errors.New(fmt.Sprintf("File not found (%s)", filename))
 }
-
-// PATHS
-// package.path=package.path..";C:\\Users\\micro\\AppData\\Roaming\\com.nesbox.tic\\TIC-80\\rift\\?.lua"   -- jtruk
-// require("./sys/sys")(R)
-
-// require("./state-logo"),
 
 func getFuncName(filename string) string {
 	reg, err := regexp.Compile("[^a-zA-Z0-9]+")
