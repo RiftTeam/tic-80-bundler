@@ -1,4 +1,4 @@
-module github.com/creativenucleus/tic80-bundler
+module github.com/RiftTeam/tic-80-bundler
 
 go 1.20
 
