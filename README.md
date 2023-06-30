@@ -27,9 +27,11 @@ Here are some suggestions for how you might employ required files. These example
 ### Example 1: Including a single file into global scope
 ```
 -- FILE1.lua
+
 MY_GLOBAL_VAR="hello"
 
 -- MAIN.lua
+
 package.path=package.path..";C:\\???\\???\\lua-tests\\example1\\?.lua"
 
 require("./file1")
@@ -43,9 +45,11 @@ end
 ### Example 2: Static data
 ```
 -- FILE1.lua
+
 return {"Hello", "There"}
 
 -- MAIN.lua
+
 package.path=package.path..";C:\\???\\???\\lua-tests\\example2\\?.lua"
 
 DATA=require("./file1")
@@ -60,6 +64,7 @@ end
 ### Example 3: Namespaced Functions
 ```
 -- FILE1.lua
+
 return {
     doSomePrint=function(txt,x,y)
         print(txt,x,y,12)
@@ -67,6 +72,7 @@ return {
 }
 
 -- MAIN.lua
+
 package.path=package.path..";C:\\???\\???\\lua-tests\\example3\\?.lua"
 
 FNS=require("./file1")
@@ -80,6 +86,7 @@ end
 ### Example 4: Library aggregation
 ```
 -- FILE1.lua
+
 return function(L)
     L=L or {}
     L.calculate=function(op1,op2)
@@ -88,6 +95,7 @@ return function(L)
 end
 
 -- FILE2.lua
+
 return function(L)
     L=L or {}
     L.print=function(txt)
@@ -96,6 +104,7 @@ return function(L)
 end
 
 -- MAIN.lua
+
 package.path=package.path..";C:\\???\\???\\lua-tests\\example4\\?.lua"
 
 L={}
@@ -112,6 +121,7 @@ end
 ### Example 5: Data factory
 ```
 -- FILE1.lua
+
 return function(reps)
     local text="HO"
     for i=1,reps do
@@ -121,6 +131,7 @@ return function(reps)
 end
 
 -- MAIN.lua
+
 package.path=package.path..";C:\\???\\???\\lua-tests\\example5\\?.lua"
 
 HOHOHO=require("./file1")(3)
