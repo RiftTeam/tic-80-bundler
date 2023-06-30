@@ -22,7 +22,7 @@ You *MUST* make sure your package path is set up in this format, otherwise the r
 
 ## Examples
 
-Here are some suggestions for how you might employ required files:
+Here are some suggestions for how you might employ required files. These examples are included in the `lua-tests` directory, and `test.bat` (on Windows, at least) should build them:
 
 ### Example 1: Including a single file into global scope
 ```
