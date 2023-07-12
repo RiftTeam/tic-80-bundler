@@ -9,7 +9,7 @@ import (
 	"regexp"
 )
 
-var REGEX_PACKAGE_PATH = regexp.MustCompile(`package.path\w*=\w*package.path\w*..\w*\"([;\w:\\.\-\?]+)\"`)
+var REGEX_PACKAGE_PATH = regexp.MustCompile(`package.path\w*=\w*package.path\w*..\w*\"([;\w :\\.\-\?]+)\"`)
 var REGEX_REQUIRE = regexp.MustCompile(`(.*)require\([\"']([\w\._\\\-\/]+)[\"']\)(\([\w,\s]+\))?(.*)`)
 
 type SourceFile struct {
