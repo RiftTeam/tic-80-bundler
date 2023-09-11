@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -26,12 +25,18 @@ func main() {
 				Usage:    "The output file",
 				Required: true,
 			},
+			&cli.StringFlag{
+				Name:  "path",
+				Usage: "An additional path to search for files",
+			},
 		},
 		Action: func(cCtx *cli.Context) error {
 			src := cCtx.String("src")
 			dest := cCtx.String("dest")
+			path := cCtx.String("path")
+
 			// "C:/Users/micro/AppData/Roaming/com.nesbox.tic/TIC-80/rift-nova-2023/demo.lua", "./out.lua"
-			doBundling(src, dest)
+			doBundling(src, dest, path)
 			return nil
 		},
 	}
@@ -41,7 +46,7 @@ func main() {
 	}
 }
 
-func doBundling(srcMainFilepath string, destFilepath string) {
+func doBundling(srcMainFilepath string, destFilepath string, path string) {
 	file, err := openFile(srcMainFilepath)
 	if err != nil {
 		log.Fatal(err)
@@ -59,6 +64,10 @@ func doBundling(srcMainFilepath string, destFilepath string) {
 		log.Fatal(err)
 	}
 	defer OutFile.Close()
+
+	if path != "" {
+		decodeAndAddPath(path)
+	}
 
 	writeLine(OutFile, "-- Assembled by the RiFT bundler\n\n")
 
@@ -93,7 +102,7 @@ func doBundling(srcMainFilepath string, destFilepath string) {
 }
 
 func readFile(filename string) string {
-	body, err := ioutil.ReadFile("file.txt")
+	body, err := os.ReadFile("file.txt")
 	if err != nil {
 		log.Fatalf("unable to read file: %v", err)
 	}
