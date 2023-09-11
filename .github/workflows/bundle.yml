@@ -24,8 +24,14 @@ jobs:
       with:
         go-version-file: './go.mod'
 
-    - name: Build
-      run: go build -o ./release/tic-80-bundler-linux-64.exe
+    - name: Build Linux
+      run: GOOS=linux GOARCH=amd64 go build -o ./release/tic-80-bundler-linux-64.exe
+
+    - name: Build Windows
+      run: GOOS=windows GOARCH=amd64 go build -o ./release/tic-80-bundler-win-64.exe
+
+    - name: Build Mac
+      run: GOOS=darwin GOARCH=amd64 go build -o ./release/tic-80-bundler-mac-64.exe
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
