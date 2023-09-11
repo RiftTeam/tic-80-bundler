@@ -1,0 +1,34 @@
+# GitHub Action to build Go
+# jtruk / RiFT
+# First version: 2023-09-11
+
+name: Build Releases
+
+# Trigger workflow when we push to main, or manually start it
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Check-out this repository under $GITHUB_WORKSPACE
+    - name: Check out code
+      uses: actions/checkout@v3
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version-file: './go.mod'
+
+    - name: Build
+      run: go build -o ./release/tic-80-bundler-linux-64.exe
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: tic-80-bundler
+        path: ./release/
