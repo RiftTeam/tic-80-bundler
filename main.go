@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -27,7 +28,7 @@ func main() {
 			},
 			&cli.StringFlag{
 				Name:  "path",
-				Usage: "An additional path to search for files",
+				Usage: "Additional paths to search for files, split by semicolon (;)",
 			},
 		},
 		Action: func(cCtx *cli.Context) error {
@@ -46,13 +47,28 @@ func main() {
 	}
 }
 
-func doBundling(srcMainFilepath string, destFilepath string, path string) {
+func doBundling(srcMainFilepath string, destFilepath string, pathsString string) {
+	if pathsString != "" {
+		paths := strings.Split(pathsString, ";")
+		for _, path := range paths {
+			strings.Trim(path, " ")
+			if path != "" {
+				addPath(path)
+			}
+		}
+	}
+
 	file, err := openFile(srcMainFilepath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
+
 	mainSource, err := readFileLines(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	mainFile := NewSourceFile("main", mainSource)
 
 	// Read In
@@ -64,10 +80,6 @@ func doBundling(srcMainFilepath string, destFilepath string, path string) {
 		log.Fatal(err)
 	}
 	defer OutFile.Close()
-
-	if path != "" {
-		decodeAndAddPath(path)
-	}
 
 	writeLine(OutFile, "-- Assembled by the RiFT bundler\n\n")
 

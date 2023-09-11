@@ -58,8 +58,13 @@ func (f *SourceFile) Write(outFile *os.File) {
 	}
 }
 
+// Strips the package.path from the pattern match code
 func decodeAndAddPath(path string) {
 	path = filepath.FromSlash(path[1 : len(path)-5])
+	addPath(path)
+}
+
+func addPath(path string) {
 	if stat, err := os.Stat(path); err == nil && stat.IsDir() {
 		fmt.Printf("Path (added): %s\n", path)
 		PATHS = append(PATHS, path)
