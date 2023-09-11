@@ -33,8 +33,26 @@ jobs:
     - name: Build Mac
       run: GOOS=darwin GOARCH=amd64 go build -o ./release/tic-80-bundler-mac-64.exe
 
-    - name: Upload artifacts
+    - name: Upload Linux
       uses: actions/upload-artifact@v3
       with:
-        name: tic-80-bundler
-        path: ./release/
+        name: tic-80-bundler-linux
+        path: |
+          ./README.md
+          ./release/tic-80-bundler-linux-64.exe
+
+    - name: Upload Windows
+      uses: actions/upload-artifact@v3
+      with:
+        name: tic-80-bundler-windows
+        path: |
+          ./README.md
+          ./release/tic-80-bundler-win-64.exe
+
+    - name: Upload Mac
+      uses: actions/upload-artifact@v3
+      with:
+        name: tic-80-bundler-mac
+        path: |
+          ./README.md
+          ./release/tic-80-bundler-mac-64.exe
